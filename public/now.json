@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "alias": "sprout",
+  "name": "sprout-capstone-1",
+  "routes": [
+      {
+        "src": "^/static/(.*)",
+        "dest": "/static/$1"
+      },
+      {
+        "src": ".*",
+        "dest": "/index.html"
+      }
+  ]
+}
