@@ -10,8 +10,9 @@ function Nav() {
       <h1>Sprout</h1>
       <Link to='/'>Home</Link>
       <Link to='/'>About</Link>
-      <Link to='/login'>Log In</Link>
-      <Link to='/'>Sign Up</Link>
+      <Link to='/add'>Add Students</Link>
+      <Link to='/main'>Teacher View</Link>
+      <Link to='/'>Log Out</Link>
     </div>
   );
 
@@ -19,7 +20,9 @@ function Nav() {
     <div className="loggedout">
       <h1>Sprout</h1>
       <Link to='/'>Home</Link>
-      <Link to='/'>Log Out</Link>
+      <Link to='/'>About</Link>
+      <Link to='/login'>Log In</Link>
+      <Link to='/'>Sign Up</Link>
 
     </div>
   )

@@ -7,6 +7,7 @@ import LogIn from './components/LogIn/LogIn';
 import Main from './components/Main/Main';
 import AddStudent from './components/AddStudent/AddStudent';
 import NotFound from './components/NotFound/NotFound';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/add" component={AddStudent}/>
             <Route path="/404" component={NotFound}/>
           </Switch>
+        <Footer />
       </div>
     </Router>
   );
