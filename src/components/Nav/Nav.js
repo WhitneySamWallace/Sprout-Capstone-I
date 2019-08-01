@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// REMOVE ONCE LOGIN LOGIC IS IMPLEMENTED
 const LOGIN = true;
 
 function Nav() {

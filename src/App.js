@@ -18,7 +18,7 @@ function App() {
             <Route path="/login" component={LogIn}/>
             <Route path="/main" component={Main}/>
             <Route path="/add" component={AddStudent}/>
-            <Route path="/notfound" component={NotFound}/>
+            <Route path="/404" component={NotFound}/>
           </Switch>
       </div>
     </Router>
