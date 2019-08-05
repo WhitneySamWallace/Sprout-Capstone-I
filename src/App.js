@@ -16,7 +16,24 @@ class App extends Component {
   state = {
     hasError: null,
     isLoading: false,
-    hasAuthToken: false,
+    hasAuthToken: true,
+    students: [],
+    addStudent: '',
+  }
+
+  handleAddStudent = (student) => {
+    this.setState({
+      addStudent: student
+    })
+  }
+
+  handleAddStudentSubmit = (e) => {
+    e.preventDefault();
+
+    this.setState({
+      students: [...this.state.students, this.state.addStudent],
+      addStudent: ''
+    })
   }
   
   render() {
@@ -25,6 +42,12 @@ class App extends Component {
         <Context.Provider
           value={{
             hasAuthToken: this.state.hasAuthToken,
+            students: this.state.students,
+            hasError: this.state.hasError,
+            isLoading: this.state.isLoading,
+            handleAddStudent: this.handleAddStudent,
+            handleAddStudentSubmit: this.handleAddStudentSubmit,
+
           }}>
           <div className="App">
             <Nav />
