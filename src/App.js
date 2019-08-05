@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import uuid from 'uuid';
 import './App.css';
 import Nav from './components/Nav/Nav';
 import LandingPage from './components/LandingPage/LandingPage';
@@ -38,10 +39,10 @@ class App extends Component {
         expand: false,
       }
     ],
-    addStudent: '',
     username: 'USERNAME', //STATIC FOR NOW
     minigoal: '',
     priority: 'high',
+    newStudentName: '',
   }
 
   updateMiniGoal = (goal) => {
@@ -53,6 +54,12 @@ class App extends Component {
   updatePriority = (priority) => {
     this.setState({
       priority: priority
+    })
+  }
+
+  updateNewStudentName = (name) => {
+    this.setState({
+      newStudentName: name
     })
   }
 
@@ -68,18 +75,19 @@ class App extends Component {
     })
   }
 
-  handleAddStudent = (student) => {
-    this.setState({
-      addStudent: student
-    })
-  }
-
   handleAddStudentSubmit = (e) => {
     e.preventDefault();
-    document.getElementById('student-name').value = '';
+    const newStudent = {
+      id: uuid(),
+      name: this.state.newStudentName,
+      goal: '',
+      priority: '',
+      expand: false,
+    }
+    console.log(newStudent);
     this.setState({
-      students: [...this.state.students, this.state.addStudent],
-      addStudent: ''
+      students: [...this.state.students, newStudent],
+      newStudentName: ''
     })
   }
 
@@ -110,6 +118,7 @@ class App extends Component {
             username: this.state.username,
             minigoal: this.state.minigoal,
             priority: this.state.priority,
+            newStudentName: this.state.newStudentName,
             handleAddStudent: this.handleAddStudent,
             handleAddStudentSubmit: this.handleAddStudentSubmit,
             handleDeleteStudent: this.handleDeleteStudent,
@@ -117,6 +126,7 @@ class App extends Component {
             updateMiniGoal: this.updateMiniGoal,
             updatePriority: this.updatePriority,
             handleUpdateGoal: this.handleUpdateGoal,
+            updateNewStudentName: this.updateNewStudentName,
 
           }}>
           <div className="App">
