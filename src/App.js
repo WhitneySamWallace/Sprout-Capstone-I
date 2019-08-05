@@ -17,8 +17,29 @@ class App extends Component {
     hasError: null,
     isLoading: false,
     hasAuthToken: true,
-    students: [],
+    students: [
+      {
+        id: 0,
+        name: 'Annie',
+        goal: 'Write an opening paragraph',
+        priority: 'low',
+        expand: false,
+      },{
+        id: 1,
+        name: 'Mathis',
+        goal: 'Come up with 3 supporting facts',
+        priority: 'medium',
+        expand: false,
+      },{
+        id: 2,
+        name: 'Kurt',
+        goal: 'Finish brain map',
+        priority: 'high',
+        expand: false,
+      }
+    ],
     addStudent: '',
+    username: 'USERNAME', //STATIC FOR NOW
   }
 
   handleAddStudent = (student) => {
@@ -42,6 +63,15 @@ class App extends Component {
       students: filteredStudents
     })
   }
+
+  toggleExpand = (studentId) => {
+    const studentToExpand = this.state.students.find(student => student.id === studentId);
+    const expandedStudent = {...studentToExpand, expand: !studentToExpand.expand}
+    console.log(expandedStudent);
+    this.setState({
+      students: this.state.students.map(student => student.id !== studentId ? student : expandedStudent)
+    })
+  }
   
   render() {
     return (
@@ -52,9 +82,11 @@ class App extends Component {
             students: this.state.students,
             hasError: this.state.hasError,
             isLoading: this.state.isLoading,
+            username: this.state.username,
             handleAddStudent: this.handleAddStudent,
             handleAddStudentSubmit: this.handleAddStudentSubmit,
             handleDeleteStudent: this.handleDeleteStudent,
+            toggleExpand: this.toggleExpand,
 
           }}>
           <div className="App">

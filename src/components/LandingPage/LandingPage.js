@@ -36,19 +36,19 @@ function LandingPage() {
           <p>Sign Up</p>
           <form id="sign-up-form">
             <div>
-              <label for="user-name">User Name</label>
+              <label htmlFor="user-name">User Name</label>
               <input placeholder="User Name" type="text" name="user-name" id="user-name" />
             </div>
             <div>
-              <label for="email">Email</label>
+              <label htmlFor="email">Email</label>
               <input placeholder="you@email.com" type="text" name="email" id="email" />
             </div>
             <div>
-              <label for="password">Password</label>
+              <label htmlFor="password">Password</label>
               <input placeholder="Password" type="password" name="password" id="password" />
             </div>
             <div>
-            <label for="confirm-password">Password</label>
+            <label htmlFor="confirm-password">Password</label>
               <input placeholder="Confirm Password" type="password" name="confirm-password" id="confirm-password" />
             </div>
             <button type="submit" onClick={console.log('clicked')}>Sign Up</button>
