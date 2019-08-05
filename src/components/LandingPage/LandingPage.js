@@ -51,7 +51,7 @@ function LandingPage() {
             <label for="confirm-password">Password</label>
               <input placeholder="Confirm Password" type="password" name="confirm-password" id="confirm-password" />
             </div>
-            <button type="submit">Sign Up</button>
+            <button type="submit" onClick={console.log('clicked')}>Sign Up</button>
           </form>
         </section>
       </main>
