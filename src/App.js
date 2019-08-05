@@ -16,7 +16,7 @@ class App extends Component {
   state = {
     hasError: null,
     isLoading: false,
-    hasAuthToken: true,
+    hasAuthToken: false,
   }
   
   render() {

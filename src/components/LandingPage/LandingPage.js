@@ -6,7 +6,7 @@ function LandingPage() {
     <div className="Landing-Page">
       <main role="main">
         <section>
-          <header role="banner">
+          <header role="banner" id="about">
             <h2>Feedback is a major factor that influences student growth.</h2>
           </header>
           <p>
@@ -22,7 +22,7 @@ function LandingPage() {
           </p>
         </section>
         <section>
-          <header>
+          <header role="banner">
             <h3>Specific, Goal-Oriented Feedback</h3>
           </header>
           <p>
@@ -30,11 +30,11 @@ function LandingPage() {
           </p>
         </section>
         <section>
-          <header>
+          <header role="banner" id="sign-up">
           <h3>Let Sprout help you grow your students' understanding.</h3>
           </header>
           <p>Sign Up</p>
-          <form>
+          <form id="sign-up-form">
             <div>
               <label for="user-name">User Name</label>
               <input placeholder="User Name" type="text" name="user-name" id="user-name" />

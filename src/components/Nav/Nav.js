@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavHashLink as NavLink } from 'react-router-hash-link';
 import Context from '../../context/Context';
 
 class Nav extends React.Component {
@@ -9,21 +9,21 @@ class Nav extends React.Component {
     const loggedin = (
       <div className="loggedin">
         <h1>Sprout</h1>
-        <Link to='/'>Home</Link>
-        <Link to='/'>About</Link>
-        <Link to='/add'>Add Students</Link>
-        <Link to='/main'>Teacher View</Link>
-        <Link to='/'>Log Out</Link>
+        <NavLink to='/'>Home</NavLink>
+        <NavLink smooth to='/#about'>About</NavLink>
+        <NavLink to='/add'>Add Students</NavLink>
+        <NavLink to='/main'>Teacher View</NavLink>
+        <NavLink to='/'>Log Out</NavLink>
       </div>
     );
 
     const loggedout = (
       <div className="loggedout">
         <h1>Sprout</h1>
-        <Link to='/'>Home</Link>
-        <Link to='/'>About</Link>
-        <Link to='/login'>Log In</Link>
-        <Link to='/'>Sign Up</Link>
+        <NavLink to='/'>Home</NavLink>
+        <NavLink smooth to='/#about'>About</NavLink>
+        <NavLink to='/login'>Log In</NavLink>
+        <NavLink smooth to='/#sign-up'>Sign Up</NavLink>
 
       </div>
     )
