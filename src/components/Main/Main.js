@@ -13,8 +13,7 @@ class Main extends React.Component {
                 <p>{student.goal}</p>
                 <p>{student.priority}</p>
                 <button onClick={e => this.context.toggleExpand(student.id)}>Check In</button>
-                {/* UPON CLICKING CHECK IN, EXPAND THE FOLLOWING DIV */}
-                <div className="hidden">
+                <div className={student.expand === false ? "hidden" : "show"}>
                   <form >
                     <div>
                       <label htmlFor="new-goal">New Goal:</label>
