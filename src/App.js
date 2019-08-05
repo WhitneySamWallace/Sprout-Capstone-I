@@ -40,6 +40,32 @@ class App extends Component {
     ],
     addStudent: '',
     username: 'USERNAME', //STATIC FOR NOW
+    minigoal: '',
+    priority: 'high',
+  }
+
+  updateMiniGoal = (goal) => {
+    this.setState({
+      minigoal: goal
+    })
+  }
+
+  updatePriority = (priority) => {
+    this.setState({
+      priority: priority
+    })
+  }
+
+  handleUpdateGoal = (e, studentId) => {
+    e.preventDefault();
+
+    const studentToUpdate = this.state.students.find(student => student.id === studentId)
+    const updatedStudent = {...studentToUpdate, goal: this.state.minigoal, priority: this.state.priority, expand: false}
+    this.setState({
+      students: this.state.students.map(student => student.id !== studentId ? student : updatedStudent),
+      minigoal: '',
+      priority: '',
+    })
   }
 
   handleAddStudent = (student) => {
@@ -67,7 +93,6 @@ class App extends Component {
   toggleExpand = (studentId) => {
     const studentToExpand = this.state.students.find(student => student.id === studentId);
     const expandedStudent = {...studentToExpand, expand: !studentToExpand.expand}
-    console.log(expandedStudent);
     this.setState({
       students: this.state.students.map(student => student.id !== studentId ? student : expandedStudent)
     })
@@ -83,10 +108,15 @@ class App extends Component {
             hasError: this.state.hasError,
             isLoading: this.state.isLoading,
             username: this.state.username,
+            minigoal: this.state.minigoal,
+            priority: this.state.priority,
             handleAddStudent: this.handleAddStudent,
             handleAddStudentSubmit: this.handleAddStudentSubmit,
             handleDeleteStudent: this.handleDeleteStudent,
             toggleExpand: this.toggleExpand,
+            updateMiniGoal: this.updateMiniGoal,
+            updatePriority: this.updatePriority,
+            handleUpdateGoal: this.handleUpdateGoal,
 
           }}>
           <div className="App">

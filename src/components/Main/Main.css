@@ -9,3 +9,7 @@
 ul {
   list-style: none;
 }
+
+li {
+  border: solid gray 1px;
+}

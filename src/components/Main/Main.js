@@ -10,24 +10,32 @@ class Main extends React.Component {
       return (
         <li key={index}>
                 <h4>{student.name}</h4>
-                <p>{student.goal}</p>
-                <p>{student.priority}</p>
+                <p>Goal: {student.goal}</p>
+                <p>Priority: {student.priority}</p>
                 <button onClick={e => this.context.toggleExpand(student.id)}>Check In</button>
                 <div className={student.expand === false ? "hidden" : "show"}>
-                  <form >
+                  <form onSubmit={e => (this.context.handleUpdateGoal(e, student.id))}>
                     <div>
                       <label htmlFor="new-goal">New Goal:</label>
-                      <input placeholder="New Mini-Goal" name="new-goal" id="new-goal" type="text"/>
+                      <input 
+                      placeholder="New Mini-Goal" 
+                      name="new-goal" 
+                      id="new-goal" 
+                      type="text"
+                      value={this.context.minigoal}
+                      onChange={e => this.context.updateMiniGoal(e.target.value)}
+                      required
+                      />
                     </div>
                     <div>
-                      <input type="radio" value="0" id="high" />
+                      <input type="radio" value="0" id="high" name="priority" onChange={e => this.context.updatePriority('high')} checked/>
                       <label htmlFor="high">High</label>
-                      <input type="radio" value="1" id="medium" />
+                      <input type="radio" value="1" id="medium" name="priority" onChange={e => this.context.updatePriority('medium')} />
                       <label htmlFor="medium">Medium</label>
-                      <input type="radio" value="3" id="low" />
+                      <input type="radio" value="3" id="low" name="priority" onChange={e => this.context.updatePriority('low')} />
                       <label htmlFor="low">Low</label>
                     </div>
-                    <button>Update</button>
+                    <button type="submit">Update</button>
                   </form>
                 </div>
               </li>
