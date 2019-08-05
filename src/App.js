@@ -35,6 +35,13 @@ class App extends Component {
       addStudent: ''
     })
   }
+
+  handleDeleteStudent = (deleteStudent) => {
+    const filteredStudents = this.state.students.filter(student => student !== deleteStudent)
+    this.setState({
+      students: filteredStudents
+    })
+  }
   
   render() {
     return (
@@ -47,6 +54,7 @@ class App extends Component {
             isLoading: this.state.isLoading,
             handleAddStudent: this.handleAddStudent,
             handleAddStudentSubmit: this.handleAddStudentSubmit,
+            handleDeleteStudent: this.handleDeleteStudent,
 
           }}>
           <div className="App">

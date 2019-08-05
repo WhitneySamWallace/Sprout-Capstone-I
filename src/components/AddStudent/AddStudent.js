@@ -10,10 +10,10 @@ class AddStudent extends React.Component {
   }
 
   render() {
-    const students = this.context.students.map(student => {
-      return (<li>
+    const students = this.context.students.map((student, index) => {
+      return (<li key={index}>
         {student}
-        <button>Delete</button>
+        <button onClick={e => this.context.handleDeleteStudent(student)}>Delete</button>
       </li>)
     })
     return (
