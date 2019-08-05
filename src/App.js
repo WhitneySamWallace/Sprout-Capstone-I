@@ -29,7 +29,7 @@ class App extends Component {
 
   handleAddStudentSubmit = (e) => {
     e.preventDefault();
-
+    document.getElementById('student-name').value = '';
     this.setState({
       students: [...this.state.students, this.state.addStudent],
       addStudent: ''
