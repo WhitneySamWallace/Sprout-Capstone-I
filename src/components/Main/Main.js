@@ -6,7 +6,14 @@ class Main extends React.Component {
   static contextType = Context;
 
   render() {
-    const students = this.context.students.map((student, index) => {
+    const studentsToSort = this.context.students.filter(student => student.order !== 0)
+    const sortedStudents = studentsToSort.sort(((a, b) => (a.order > b.order) ? 1 : -1))
+
+    const studentsToList = this.context.students.filter(student => student.order === 0)
+
+    const allStudents = [...sortedStudents, ...studentsToList]
+    
+    const students = allStudents.map((student, index) => {
       return (
         <li key={index}>
                 <h4>{student.name}</h4>

@@ -25,18 +25,24 @@ class App extends Component {
         goal: 'Write an opening paragraph',
         priority: 'low',
         expand: false,
+        alert: false,
+        order: 0,
       },{
         id: 1,
         name: 'Mathis',
         goal: 'Come up with 3 supporting facts',
         priority: 'medium',
         expand: false,
+        alert: false,
+        order: 0,
       },{
         id: 2,
         name: 'Kurt',
         goal: 'Finish brain map',
         priority: 'high',
         expand: false,
+        alert: false,
+        order: 0,
       }
     ],
     username: 'USERNAME', //STATIC FOR NOW
@@ -51,6 +57,7 @@ class App extends Component {
     }
   }
 
+  // all 'update' prefixes set state
   updateUsername = (username) => {
     this.setState({
       signup: {
@@ -105,11 +112,13 @@ class App extends Component {
     })
   }
 
+  // Updates mini-goal and priority for student having check-in (Main view)
   handleUpdateGoal = (e, studentId) => {
     e.preventDefault();
 
     const studentToUpdate = this.state.students.find(student => student.id === studentId)
-    const updatedStudent = {...studentToUpdate, goal: this.state.minigoal, priority: this.state.priority, expand: false}
+    const updatedStudent = {...studentToUpdate, goal: this.state.minigoal, priority: this.state.priority, expand: false, order: 0}
+    this.handleTimer(studentId, this.state.priority)
     this.setState({
       students: this.state.students.map(student => student.id !== studentId ? student : updatedStudent),
       minigoal: '',
@@ -117,6 +126,25 @@ class App extends Component {
     })
   }
 
+  // Sets timer for specified priority (Main view)
+  // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 ------------ //CHANGED FOR TESTING
+  handleTimer = (studentId, priority) => {
+    const time = priority === 'high' ? 3000 : (priority === 'medium') ? 6000 : 12000;
+    setTimeout(this.handleAlert, time, studentId)
+  }
+
+  // Callback fn for priority timers, enables alert status and reorders (Main view)
+  handleAlert = (studentId) => {
+    const alertStudent = this.state.students.find(student => student.id === studentId);
+    // toggle css
+    const studentOrder = {...alertStudent, alert: true, order: new Date()}
+    // re-order
+    this.setState({
+      students: this.state.students.map(student => student.id !== studentId ? student : studentOrder)
+    })
+  }
+
+  //Updates student and adds them to student list (Add Student view)
   handleAddStudentSubmit = (e) => {
     e.preventDefault();
     const newStudent = {
@@ -133,6 +161,7 @@ class App extends Component {
     })
   }
 
+  //Deletes student from list (Add Student view)
   handleDeleteStudent = (deleteStudent) => {
     const filteredStudents = this.state.students.filter(student => student !== deleteStudent)
     this.setState({
@@ -155,9 +184,10 @@ class App extends Component {
     })
   }
 
+  // Expands student checkin and removes alert conditions, if present (Main view)
   toggleExpand = (studentId) => {
     const studentToExpand = this.state.students.find(student => student.id === studentId);
-    const expandedStudent = {...studentToExpand, expand: !studentToExpand.expand}
+    const expandedStudent = {...studentToExpand, expand: !studentToExpand.expand, alert: false}
     this.setState({
       students: this.state.students.map(student => student.id !== studentId ? student : expandedStudent)
     })
