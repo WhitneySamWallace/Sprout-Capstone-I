@@ -43,6 +43,48 @@ class App extends Component {
     minigoal: '',
     priority: 'high',
     newStudentName: '',
+    signup: {
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    }
+  }
+
+  updateUsername = (username) => {
+    this.setState({
+      signup: {
+        ...this.state.signup,
+        username
+      }
+    })
+  }
+
+  updateEmail = (email) => {
+    this.setState({
+      signup: {
+        ...this.state.signup,
+        email
+      }
+    })
+  }
+
+  updatePassword = (password) => {
+    this.setState({
+      signup: {
+        ...this.state.signup,
+        password
+      }
+    })
+  }
+
+  updateConfirmPassword = (confirmPassword) => {
+    this.setState({
+      signup: {
+        ...this.state.signup,
+        confirmPassword
+      }
+    })
   }
 
   updateMiniGoal = (goal) => {
@@ -98,6 +140,21 @@ class App extends Component {
     })
   }
 
+  handleSignUpSubmit = (e) => {
+    e.preventDefault();
+    const newUser = {...this.state.signup}
+    console.log(newUser)
+
+    this.setState({
+      signup: {
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      }
+    })
+  }
+
   toggleExpand = (studentId) => {
     const studentToExpand = this.state.students.find(student => student.id === studentId);
     const expandedStudent = {...studentToExpand, expand: !studentToExpand.expand}
@@ -118,6 +175,10 @@ class App extends Component {
             username: this.state.username,
             minigoal: this.state.minigoal,
             priority: this.state.priority,
+            signUpUsername: this.state.signup.username,
+            signUpEmail: this.state.signup.email,
+            signUpPassword: this.state.signup.password,
+            signUpConfirmPassword: this.state.signup.confirmPassword,
             newStudentName: this.state.newStudentName,
             handleAddStudent: this.handleAddStudent,
             handleAddStudentSubmit: this.handleAddStudentSubmit,
@@ -127,6 +188,11 @@ class App extends Component {
             updatePriority: this.updatePriority,
             handleUpdateGoal: this.handleUpdateGoal,
             updateNewStudentName: this.updateNewStudentName,
+            updateConfirmPassword: this.updateConfirmPassword,
+            updatePassword: this.updatePassword,
+            updateEmail: this.updateEmail,
+            updateUsername: this.updateUsername,
+            handleSignUpSubmit: this.handleSignUpSubmit,
 
           }}>
           <div className="App">
