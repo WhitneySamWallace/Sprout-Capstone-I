@@ -39,7 +39,7 @@ class App extends Component {
         id: uuid(),
         name: 'Kurt',
         goal: 'Finish brain map',
-        priority: 'None',
+        priority: 'low',
         expand: false,
         alert: false,
         order: 0,
@@ -101,7 +101,7 @@ class App extends Component {
   }
 
   updatePriority = (priority) => {
-    const updatePriority = priority === 'None' ? 'low' : priority 
+    const updatePriority = priority === '' ? 'low' : priority 
     this.setState({
       priority: updatePriority
     })
@@ -123,7 +123,7 @@ class App extends Component {
     this.setState({
       students: this.state.students.map(student => student.id !== studentId ? student : updatedStudent),
       minigoal: '',
-      priority: 'None',
+      priority: 'low',
     })
   }
 
