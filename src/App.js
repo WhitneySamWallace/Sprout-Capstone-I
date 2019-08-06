@@ -39,7 +39,7 @@ class App extends Component {
         id: uuid(),
         name: 'Kurt',
         goal: 'Finish brain map',
-        priority: 'high',
+        priority: 'None',
         expand: false,
         alert: false,
         order: 0,
@@ -47,7 +47,7 @@ class App extends Component {
     ],
     username: 'USERNAME', //STATIC FOR NOW
     minigoal: '',
-    priority: 'high',
+    priority: 'low',
     newStudentName: '',
     signup: {
       username: '',
@@ -101,8 +101,9 @@ class App extends Component {
   }
 
   updatePriority = (priority) => {
+    const updatePriority = priority === 'None' ? 'low' : priority 
     this.setState({
-      priority: priority
+      priority: updatePriority
     })
   }
 
@@ -122,7 +123,7 @@ class App extends Component {
     this.setState({
       students: this.state.students.map(student => student.id !== studentId ? student : updatedStudent),
       minigoal: '',
-      priority: '',
+      priority: 'None',
     })
   }
 
@@ -136,7 +137,7 @@ class App extends Component {
   // Callback fn for priority timers, enables alert status and reorders (Main view)
   handleAlert = (studentId) => {
     const alertStudent = this.state.students.find(student => student.id === studentId);
-    // toggle css
+    // toggle alert
     const studentOrder = {...alertStudent, alert: true, order: new Date()}
     // re-order
     this.setState({
@@ -153,6 +154,7 @@ class App extends Component {
       goal: '',
       priority: '',
       expand: false,
+      order: 0,
     }
     console.log(newStudent);
     this.setState({
@@ -192,10 +194,11 @@ class App extends Component {
     console.log('Reset!')
   }
 
-  // Expands student checkin and removes alert conditions, if present (Main view)
+  // Expands student checkin and updates alert and order conditions (Main view)
   toggleExpand = (studentId) => {
     const studentToExpand = this.state.students.find(student => student.id === studentId);
-    const expandedStudent = {...studentToExpand, expand: !studentToExpand.expand, alert: false}
+    const alertCheck = studentToExpand.alert === false ? 0 : studentToExpand.order
+    const expandedStudent = {...studentToExpand, expand: !studentToExpand.expand, alert: false, order: alertCheck}
     this.setState({
       students: this.state.students.map(student => student.id !== studentId ? student : expandedStudent)
     })

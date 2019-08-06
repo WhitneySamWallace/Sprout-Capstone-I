@@ -15,7 +15,7 @@ class Main extends React.Component {
     
     const students = allStudents.map((student, index) => {
       return (
-        <li key={index}>
+        <li key={index} className={student.alert === true ? 'alert' : ''}>
                 <h4>{student.name}</h4>
                 <p>Goal: {student.goal}</p>
                 <p>Priority: {student.priority}</p>
@@ -35,7 +35,7 @@ class Main extends React.Component {
                       />
                     </div>
                     <div>
-                      <input type="radio" value="0" id="high" name="priority" onChange={e => this.context.updatePriority('high')} checked/>
+                      <input type="radio" value="0" id="high" name="priority" onChange={e => this.context.updatePriority('high')} />
                       <label htmlFor="high">High</label>
                       <input type="radio" value="1" id="medium" name="priority" onChange={e => this.context.updatePriority('medium')} />
                       <label htmlFor="medium">Medium</label>

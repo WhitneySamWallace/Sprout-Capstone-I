@@ -13,3 +13,7 @@ ul {
 li {
   border: solid gray 1px;
 }
+
+.alert {
+  background-color: lightcoral;
+}
