@@ -20,7 +20,7 @@ class App extends Component {
     hasAuthToken: true,
     students: [
       {
-        id: 0,
+        id: uuid(),
         name: 'Annie',
         goal: 'Write an opening paragraph',
         priority: 'low',
@@ -28,7 +28,7 @@ class App extends Component {
         alert: false,
         order: 0,
       },{
-        id: 1,
+        id: uuid(),
         name: 'Mathis',
         goal: 'Come up with 3 supporting facts',
         priority: 'medium',
@@ -36,7 +36,7 @@ class App extends Component {
         alert: false,
         order: 0,
       },{
-        id: 2,
+        id: uuid(),
         name: 'Kurt',
         goal: 'Finish brain map',
         priority: 'high',
@@ -184,6 +184,14 @@ class App extends Component {
     })
   }
 
+  // Source: https://stackoverflow.com/questions/52844028/using-setstate-to-change-multiple-values-within-an-array-of-objects-reactjs
+  handleReset = (e) => {
+    const resetStudents = ({priority, order, goal, expand, alert, id, name}) => ({id, name, priority: 'high', order: 0, goal: '', expand: false, alert: false});
+
+    this.setState(state => ({students: state.students.map(resetStudents)}))
+    console.log('Reset!')
+  }
+
   // Expands student checkin and removes alert conditions, if present (Main view)
   toggleExpand = (studentId) => {
     const studentToExpand = this.state.students.find(student => student.id === studentId);
@@ -223,6 +231,7 @@ class App extends Component {
             updateEmail: this.updateEmail,
             updateUsername: this.updateUsername,
             handleSignUpSubmit: this.handleSignUpSubmit,
+            handleReset: this.handleReset,
 
           }}>
           <div className="App">

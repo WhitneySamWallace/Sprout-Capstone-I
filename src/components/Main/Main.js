@@ -19,7 +19,7 @@ class Main extends React.Component {
                 <h4>{student.name}</h4>
                 <p>Goal: {student.goal}</p>
                 <p>Priority: {student.priority}</p>
-                <button onClick={e => this.context.toggleExpand(student.id)}>Check In</button>
+                <button onClick={e => this.context.toggleExpand(student.id)}>{student.expand === true ? 'Cancel' : 'Check In'}</button>
                 <div className={student.expand === false ? "hidden" : "show"}>
                   <form onSubmit={e => (this.context.handleUpdateGoal(e, student.id))}>
                     <div>
@@ -56,6 +56,7 @@ class Main extends React.Component {
           </header>
           <section>
             <h3>Student List</h3>
+            <button onClick={e => this.context.handleReset(e)}>Reset</button>
             <ul>
               {students}
             </ul>
