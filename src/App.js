@@ -15,36 +15,11 @@ import Context from './context/Context';
 class App extends Component {
 
   state = {
+    error: null,
     hasError: null,
     isLoading: false,
     hasAuthToken: true,
-    students: [
-      {
-        id: uuid(),
-        name: 'Annie',
-        goal: 'Write an opening paragraph',
-        priority: 'low',
-        expand: false,
-        alert: false,
-        order: 0,
-      },{
-        id: uuid(),
-        name: 'Mathis',
-        goal: 'Come up with 3 supporting facts',
-        priority: 'medium',
-        expand: false,
-        alert: false,
-        order: 0,
-      },{
-        id: uuid(),
-        name: 'Kurt',
-        goal: 'Finish brain map',
-        priority: 'low',
-        expand: false,
-        alert: false,
-        order: 0,
-      }
-    ],
+    students: [],
     username: 'USERNAME', //STATIC FOR NOW
     minigoal: '',
     priority: 'low',
@@ -55,6 +30,27 @@ class App extends Component {
       password: '',
       confirmPassword: '',
     }
+  }
+
+  setError = (error) => {
+    console.error(error);
+    this.setState({ error })
+  }
+
+  clearError = () => {
+    this.setState({ error: null})
+  }
+
+  setStudents = (students) => {
+    this.setState({
+      students
+    })
+  }
+
+  setNewStudent = (newStudent) => {
+    this.setState({
+      students: [...this.state.students, newStudent]
+    })
   }
 
   // all 'update' prefixes set state
@@ -235,6 +231,9 @@ class App extends Component {
             updateUsername: this.updateUsername,
             handleSignUpSubmit: this.handleSignUpSubmit,
             handleReset: this.handleReset,
+            setError: this.setError,
+            clearError: this.clearError,
+            setStudents: this.setStudents,
 
           }}>
           <div className="App">

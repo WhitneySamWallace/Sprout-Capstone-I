@@ -1,9 +1,17 @@
 import React from 'react';
 import './AddStudent.css';
 import Context from '../../context/Context';
+import StudentsApiService from '../../services/students-api-service';
 
 class AddStudent extends React.Component {
   static contextType = Context;
+
+  componentDidMount() {
+    this.context.clearError();
+    StudentsApiService.getStudents()
+      .then(students => this.context.setStudents(students))
+      .catch(error => this.context.setError(error))
+  }
 
   render() {
     const students = this.context.students.map((student, index) => {
