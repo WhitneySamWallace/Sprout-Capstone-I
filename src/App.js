@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import uuid from 'uuid';
 import './App.css';
 import Nav from './components/Nav/Nav';
 import LandingPage from './components/LandingPage/LandingPage';
@@ -10,6 +9,7 @@ import AddStudent from './components/AddStudent/AddStudent';
 import NotFound from './components/NotFound/NotFound';
 import Footer from './components/Footer/Footer';
 import Context from './context/Context';
+import StudentsApiService from './services/students-api-service';
 
 
 class App extends Component {
@@ -17,7 +17,6 @@ class App extends Component {
   state = {
     error: null,
     hasError: null,
-    isLoading: false,
     hasAuthToken: true,
     students: [],
     username: 'USERNAME', //STATIC FOR NOW
@@ -34,11 +33,17 @@ class App extends Component {
 
   setError = (error) => {
     console.error(error);
-    this.setState({ error })
+    this.setState({ 
+      error,
+      hasError: true,
+    })
   }
 
   clearError = () => {
-    this.setState({ error: null})
+    this.setState({ 
+      error: null,
+      hasError: false,
+    })
   }
 
   setStudents = (students) => {
@@ -112,15 +117,35 @@ class App extends Component {
   // Updates mini-goal and priority for student having check-in (Main view)
   handleUpdateGoal = (e, studentId) => {
     e.preventDefault();
+    this.clearError();
+    const data = {goal: this.state.minigoal, priority: this.state.priority}
+    StudentsApiService.updateStudent(studentId, data)
+      .then(res => {
+        const studentToUpdate = this.state.students.find(student => student.id ===studentId)
+        const updatedStudent = {...studentToUpdate, ...data, expand: false, order: 0};
+        this.handleTimer(updatedStudent.id, this.state.priority);
+        this.setState({
+          students: this.state.students.map(student => student.id !== studentId ? student : updatedStudent),
+          minigoal: '',
+          priority: 'low',
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({
+          hasError: true,
+          error: err
+        });
+      });
 
-    const studentToUpdate = this.state.students.find(student => student.id === studentId)
-    const updatedStudent = {...studentToUpdate, goal: this.state.minigoal, priority: this.state.priority, expand: false, order: 0}
-    this.handleTimer(studentId, this.state.priority)
-    this.setState({
-      students: this.state.students.map(student => student.id !== studentId ? student : updatedStudent),
-      minigoal: '',
-      priority: 'low',
-    })
+    //const studentToUpdate = this.state.students.find(student => student.id === studentId)
+    //const updatedStudent = {...studentToUpdate, goal: this.state.minigoal, priority: this.state.priority, expand: false, order: 0}
+    //this.handleTimer(studentId, this.state.priority)
+    // this.setState({
+    //   students: this.state.students.map(student => student.id !== studentId ? student : updatedStudent),
+    //   minigoal: '',
+    //   priority: 'low',
+    // })
   }
 
   // Sets timer for specified priority (Main view)
@@ -144,27 +169,39 @@ class App extends Component {
   //Updates student and adds them to student list (Add Student view)
   handleAddStudentSubmit = (e) => {
     e.preventDefault();
-    const newStudent = {
-      id: uuid(),
-      name: this.state.newStudentName,
-      goal: '',
-      priority: '',
-      expand: false,
-      order: 0,
-    }
-    console.log(newStudent);
-    this.setState({
-      students: [...this.state.students, newStudent],
-      newStudentName: ''
+    this.clearError();
+    const newStudentName = this.state.newStudentName
+    
+    StudentsApiService.postStudent(newStudentName)
+    .then(student => {
+      console.log(student);
+      this.setState({
+        students: [...this.state.students, student],
+        newStudentName: '',
+      })
+    })
+    .catch(err => {
+      console.error(err);
+      this.setError(err);
     })
   }
 
   //Deletes student from list (Add Student view)
   handleDeleteStudent = (deleteStudent) => {
-    const filteredStudents = this.state.students.filter(student => student !== deleteStudent)
-    this.setState({
-      students: filteredStudents
-    })
+    this.clearError();
+    const studentId = deleteStudent.id;
+
+    StudentsApiService.deleteStudent(studentId)
+      .then(() => {
+        console.log(studentId);
+        this.setState({
+          students: this.state.students.filter(student => student.id !== studentId)
+        })
+      })
+      .catch(err => {
+        console.error(err);
+        this.setError(err);
+      })
   }
 
   handleSignUpSubmit = (e) => {

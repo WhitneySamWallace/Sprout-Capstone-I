@@ -39,11 +39,14 @@ const StudentsApiService = {
       headers: {
         'authorization': `bearer ${config.API_KEY}`
       },
+      body: JSON.stringify({
+        id
+      })
     })
     .then(res => {
-      return (!res.ok)
-        ? res.json().then(e => Promise.reject(e))
-        : res.json()
+      if(!res.ok) {
+        throw new Error('Something went wrong!  Please try again.');
+      }
     })
   },
 
@@ -54,11 +57,15 @@ const StudentsApiService = {
         'content-type': 'application/json',
         'authorization': `bearer ${config.API_KEY}`
       },
+      body: JSON.stringify({
+        id,
+        ...data
+      })
     })
     .then(res => {
-      return (!res.ok)
-        ? res.json().then(e => Promise.reject(e))
-        : res.json()
+      if (!res.ok) {
+        throw new Error('Something went wrong!  Please try again.')
+      }
     })
   },
 }
