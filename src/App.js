@@ -47,9 +47,18 @@ class App extends Component {
   }
 
   setStudents = (students) => {
-    this.setState({
-      students
+    const addKeysStudents = students.map(student => {
+      student.expand = false;
+      student.alert = false;
+      student.order = 0;
+      student.priority = 'low';
+
+      return student;
     })
+    this.setState({
+      students: addKeysStudents
+    })
+    console.log(this.state.students);
   }
 
   setNewStudent = (newStudent) => {
