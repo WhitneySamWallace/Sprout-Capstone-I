@@ -1,5 +1,7 @@
 import React from 'react';
 import Context from '../../context/Context';
+import SignUpForm from '../SignUpForm/SignUpForm';
+import Nav from '../Nav/Nav';
 import './LandingPage.css';
 
 class LandingPage extends React.Component {
@@ -8,6 +10,7 @@ class LandingPage extends React.Component {
   render() {
     return (
       <div className="Landing-Page">
+        <Nav />
         <main role="main">
           <section>
             <header role="banner" id="about">
@@ -38,53 +41,7 @@ class LandingPage extends React.Component {
             <h3>Let Sprout help you grow your students' understanding.</h3>
             </header>
             <p>Sign Up</p>
-            <form id="sign-up-form" onSubmit={e => this.context.handleSignUpSubmit(e)}>
-              <div>
-                <label htmlFor="user-name">User Name</label>
-                <input 
-                placeholder="User Name" 
-                type="text" 
-                name="user-name" 
-                id="user-name" 
-                value={this.context.signUpUsername}
-                onChange={e => this.context.updateUsername(e.target.value)}
-                required/>
-              </div>
-              <div>
-                <label htmlFor="email">Email</label>
-                <input 
-                placeholder="you@email.com" 
-                type="text" 
-                name="email" 
-                id="email" 
-                value={this.context.signUpEmail}
-                onChange={e => this.context.updateEmail(e.target.value)}
-                required/>
-              </div>
-              <div>
-                <label htmlFor="password">Password</label>
-                <input 
-                placeholder="Password" 
-                type="password" 
-                name="password" 
-                id="password" 
-                value={this.context.signUpPassword}
-                onChange={e => this.context.updatePassword(e.target.value)}
-                required/>
-              </div>
-              <div>
-              <label htmlFor="confirm-password">Password</label>
-                <input 
-                placeholder="Confirm Password" 
-                type="password" 
-                name="confirm-password" 
-                id="confirm-password" 
-                value={this.context.signUpConfirmPassword}
-                onChange={e => this.context.updateConfirmPassword(e.target.value)}
-                required/>
-              </div>
-              <button type="submit">Sign Up</button>
-            </form>
+            <SignUpForm />
           </section>
         </main>
       </div>

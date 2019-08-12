@@ -1,4 +1,5 @@
 import React from 'react';
+import Nav from '../Nav/Nav';
 import './AddStudent.css';
 import Context from '../../context/Context';
 import StudentsApiService from '../../services/students-api-service';
@@ -22,6 +23,7 @@ class AddStudent extends React.Component {
     })
     return (
       <div className="Add-Student">
+      <Nav />
       <main>
         <header>
           <h2>Add Students</h2>

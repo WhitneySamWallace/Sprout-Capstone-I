@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import Nav from './components/Nav/Nav';
 import LandingPage from './components/LandingPage/LandingPage';
 import LogIn from './components/LogIn/LogIn';
 import Main from './components/Main/Main';
@@ -10,6 +9,9 @@ import NotFound from './components/NotFound/NotFound';
 import Footer from './components/Footer/Footer';
 import Context from './context/Context';
 import StudentsApiService from './services/students-api-service';
+import AuthApiService from './services/auth-api-service';
+import TokenService from './services/token-service';
+import IdleService from './services/idle-service';
 
 
 class App extends Component {
@@ -17,18 +19,11 @@ class App extends Component {
   state = {
     error: null,
     hasError: null,
-    hasAuthToken: true,
     students: [],
     username: 'USERNAME', //STATIC FOR NOW
     minigoal: '',
     priority: 'low',
     newStudentName: '',
-    signup: {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    }
   }
 
   setError = (error) => {
@@ -58,7 +53,6 @@ class App extends Component {
     this.setState({
       students: addKeysStudents
     })
-    console.log(this.state.students);
   }
 
   setNewStudent = (newStudent) => {
@@ -67,42 +61,31 @@ class App extends Component {
     })
   }
 
-  // all 'update' prefixes set state
-  updateUsername = (username) => {
-    this.setState({
-      signup: {
-        ...this.state.signup,
-        username
-      }
-    })
+  // Auth/Idle
+  componentDidMount() {
+    IdleService.setIdleCallback(this.logoutFromIdle);
+
+    if (TokenService.hasAuthToken()) {
+      IdleService.registerIdleTimerResets();
+      TokenService.queueCallbackBeforeExpiry(() => {
+        AuthApiService.postRefreshToken();
+      })
+    }
   }
 
-  updateEmail = (email) => {
-    this.setState({
-      signup: {
-        ...this.state.signup,
-        email
-      }
-    })
+  componentWillUnmount() {
+    IdleService.unRegisterIdleResets();
+    TokenService.clearCallbackBeforeExpiry();
   }
 
-  updatePassword = (password) => {
-    this.setState({
-      signup: {
-        ...this.state.signup,
-        password
-      }
-    })
+  logoutFromIdle = () => {
+    TokenService.clearAuthToken();
+    TokenService.clearCallbackBeforeExpiry();
+    IdleService.unRegisterIdleResets();
+    this.forceUpdate();
   }
 
-  updateConfirmPassword = (confirmPassword) => {
-    this.setState({
-      signup: {
-        ...this.state.signup,
-        confirmPassword
-      }
-    })
-  }
+  // all 'update' prefixes set state 
 
   updateMiniGoal = (goal) => {
     this.setState({
@@ -183,7 +166,6 @@ class App extends Component {
     
     StudentsApiService.postStudent(newStudentName)
     .then(student => {
-      console.log(student);
       this.setState({
         students: [...this.state.students, student],
         newStudentName: '',
@@ -202,7 +184,6 @@ class App extends Component {
 
     StudentsApiService.deleteStudent(studentId)
       .then(() => {
-        console.log(studentId);
         this.setState({
           students: this.state.students.filter(student => student.id !== studentId)
         })
@@ -215,17 +196,41 @@ class App extends Component {
 
   handleSignUpSubmit = (e) => {
     e.preventDefault();
-    const newUser = {...this.state.signup}
-    console.log(newUser)
-
-    this.setState({
-      signup: {
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      }
+    const {username, password, email, confirm_password} = e.target;
+    
+    this.setState({ 
+      hasError: false,
+      error: null 
     })
+
+    //VALIDATE THAT PASSWORD MATCHES
+    if (password.value !== confirm_password.value) {
+      //trigger passwords do not match error
+      this.setState({
+        hasError: true,
+        error: 'Passwords do not match!'
+      })
+    } else {
+      
+      AuthApiService.postUser({
+        username: username.value,
+        password: password.value,
+        email: email.value,
+      })
+      .then(user => {
+        username.value = '';
+        password.value = '';
+        email.value = '';
+        confirm_password.value = '';
+        //Do something to indicate successful sign up --> Redirect to Login page?
+      })
+      .catch(res => {
+        this.setState({ 
+          hasError: true,
+          error: res.error 
+        })
+      })
+    }
   }
 
   // Source: https://stackoverflow.com/questions/52844028/using-setstate-to-change-multiple-values-within-an-array-of-objects-reactjs
@@ -233,7 +238,6 @@ class App extends Component {
     const resetStudents = ({priority, order, goal, expand, alert, id, name}) => ({id, name, priority: 'high', order: 0, goal: '', expand: false, alert: false});
 
     this.setState(state => ({students: state.students.map(resetStudents)}))
-    console.log('Reset!')
   }
 
   // Expands student checkin and updates alert and order conditions (Main view)
@@ -251,17 +255,12 @@ class App extends Component {
       <Router>
         <Context.Provider
           value={{
-            hasAuthToken: this.state.hasAuthToken,
             students: this.state.students,
             hasError: this.state.hasError,
             isLoading: this.state.isLoading,
             username: this.state.username,
             minigoal: this.state.minigoal,
             priority: this.state.priority,
-            signUpUsername: this.state.signup.username,
-            signUpEmail: this.state.signup.email,
-            signUpPassword: this.state.signup.password,
-            signUpConfirmPassword: this.state.signup.confirmPassword,
             newStudentName: this.state.newStudentName,
             handleAddStudent: this.handleAddStudent,
             handleAddStudentSubmit: this.handleAddStudentSubmit,
@@ -283,7 +282,6 @@ class App extends Component {
 
           }}>
           <div className="App">
-            <Nav />
               <Switch>
                 <Route exact path="/" component={LandingPage}/>
                 <Route path="/login" component={LogIn}/>

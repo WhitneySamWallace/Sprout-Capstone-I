@@ -1,4 +1,5 @@
 import React from 'react';
+import Nav from '../Nav/Nav';
 import './Main.css';
 import Context from '../../context/Context';
 import StudentsApiService from '../../services/students-api-service';
@@ -58,6 +59,7 @@ class Main extends React.Component {
     })
     return (
       <div className="Main">
+        <Nav />
         <main>
           <header>
             <h2>Welcome back, {this.context.username}!</h2>

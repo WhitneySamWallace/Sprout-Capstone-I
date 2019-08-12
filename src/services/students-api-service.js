@@ -1,11 +1,12 @@
 import config from '../config';
+import TokenService from '../services/token-service';
 
 const StudentsApiService = {
   getStudents() {
     return fetch(`${config.API_ENDPOINT}/students`, {
       method: 'GET',
       headers: {
-        'authorization': `bearer ${config.API_KEY}`
+        'authorization': `bearer ${TokenService.getAuthToken()}`
       },
     })
     .then(res => {
@@ -20,7 +21,7 @@ const StudentsApiService = {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'authorization': `bearer ${config.API_KEY}`
+        'authorization': `bearer ${TokenService.getAuthToken()}`
       },
       body: JSON.stringify({
         name
@@ -37,7 +38,7 @@ const StudentsApiService = {
     return fetch(`${config.API_ENDPOINT}/students/${id}`, {
       method: 'DELETE',
       headers: {
-        'authorization': `bearer ${config.API_KEY}`
+        'authorization': `bearer ${TokenService.getAuthToken()}`
       },
       body: JSON.stringify({
         id
@@ -55,7 +56,7 @@ const StudentsApiService = {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
-        'authorization': `bearer ${config.API_KEY}`
+        'authorization': `bearer ${TokenService.getAuthToken()}`
       },
       body: JSON.stringify({
         id,
