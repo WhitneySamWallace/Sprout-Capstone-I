@@ -11,7 +11,7 @@ class LogIn extends React.Component {
     error: null
   }
 
-  handleLoginSuccess = () => {
+  handleLoginSuccess = (username) => {
     const { location, history } = this.props;
     const destination = (location.state || {}).from || '/main'
     history.push(destination)
@@ -21,6 +21,7 @@ class LogIn extends React.Component {
     e.preventDefault();
     this.setState({ error: null })
     const { username, password } = e.target;
+    this.context.updateUsername(username.value);
 
     AuthApiService.postLogin({
       username: username.value,

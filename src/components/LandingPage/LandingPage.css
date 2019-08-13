@@ -1,0 +1,26 @@
+/* paragraph - font-family: 'Lexend Deca', sans-serif;
+bold - font-family: 'Rubik', sans-serif; */
+.about-section {
+  padding: 20px;
+}
+
+.about-section h2 {
+  font-size: 40px;
+}
+
+.info-section {
+  background-color: rgb(240, 240, 240);
+  padding: 20px;
+}
+
+.demo-section {
+  padding: 20px;
+}
+
+.sign-up-section {
+  padding: 20px;
+}
+
+h3 {
+  font-size: 30px;
+}

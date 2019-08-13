@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavHashLink as NavLink } from 'react-router-hash-link';
 import Context from '../../context/Context';
 import SignUpForm from '../SignUpForm/SignUpForm';
 import Nav from '../Nav/Nav';
@@ -11,32 +12,41 @@ class LandingPage extends React.Component {
     return (
       <div className="Landing-Page">
         <Nav />
-        <main role="main">
-          <section>
+        <main role="main" className="main">
+          <section className="about-section">
             <header role="banner" id="about">
-              <h2>Feedback is a major factor that influences student growth.</h2>
+              <h2>Grow Every Student with Your Feedback</h2>
             </header>
             <p>
-              Paragraph addressing feedback as a classroom tool.  Feedback should be specific, timely, and goal-oriented.
+              Join other cutting-edge classrooms in using Sprout to deliver specific, goal-oriented, and timely feedback to students.
             </p>
+            <NavLink smooth to='/#sign-up'>Sign Up</NavLink>
           </section>
-          <section>
+          <section className="info-section">
             <header role ="banner">
-              <h3>Timely Feedback</h3>
+              <h3>Manage Timely Feedback</h3>
             </header>
             <p>
-              Snippet addressing Sprout's timing system.
+              Teachers choose the priority level of each student goal and Sprout will keep track and remind you when a student is ready for a check in.
             </p>
-          </section>
-          <section>
             <header role="banner">
-              <h3>Specific, Goal-Oriented Feedback</h3>
+              <h3>Give Specific, Goal-Oriented Feedback</h3>
             </header>
             <p>
-              Snippet addressing Sprout's mini-goal feature
+              Sprout helps you keep track of each student's individual, achievable mini-goal during a work session all in one place.
+
             </p>
           </section>
-          <section>
+          <section className="demo-section">
+            <h3>Sprout Demo</h3>
+            <p>Discover what Sprout has to offer:</p>
+            <ul>
+              <li>Username: Teacher1</li>
+              <li>Password: teacher1password</li>
+            </ul>
+            <NavLink to='/login'>Demo Login</NavLink>
+          </section>
+          <section className="sign-up-section">
             <header role="banner" id="sign-up">
             <h3>Let Sprout help you grow your students' understanding.</h3>
             </header>

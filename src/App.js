@@ -20,7 +20,7 @@ class App extends Component {
     error: null,
     hasError: null,
     students: [],
-    username: 'USERNAME', //STATIC FOR NOW
+    username: '', //STATIC FOR NOW
     minigoal: '',
     priority: 'low',
     newStudentName: '',
@@ -86,6 +86,12 @@ class App extends Component {
   }
 
   // all 'update' prefixes set state 
+
+  updateUsername = (username) => {
+    this.setState({
+      username
+    })
+  }
 
   updateMiniGoal = (goal) => {
     this.setState({
