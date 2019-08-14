@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from 'react-router-dom';
 import Context from "../../context/Context";
 import "./SignUpForm.css";
 
@@ -7,11 +6,13 @@ class SignUpForm extends React.Component {
   static contextType = Context;
 
   render() {
+    console.log(this.props);
+    console.log(this.context.handleSignUpSubmit);
     return (
       <div className="sign-up-form-container">
       <form
         id="sign-up-form"
-        onSubmit={e => this.context.handleSignUpSubmit(e)}
+        onSubmit={e => this.context.handleSignUpSubmit(e).then(()=>{this.props.history.push('/main')})}
       >
         <div>
           <label htmlFor="username">User Name:</label>
@@ -54,7 +55,7 @@ class SignUpForm extends React.Component {
           />
         </div>
         <button type="submit" className="sign-up-button">
-          <Link to="/login" className="sign-up-link">Sign Up</Link>
+          Sign Up
         </button>
       </form>
       </div>

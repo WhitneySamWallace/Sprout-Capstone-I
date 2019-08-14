@@ -203,6 +203,7 @@ class App extends Component {
 
   handleSignUpSubmit = (e) => {
     e.preventDefault();
+    console.log('Sign up called');
     const {username, password, email, confirm_password} = e.target;
     
     this.setState({ 
@@ -219,19 +220,28 @@ class App extends Component {
       })
     } else {
       
-      AuthApiService.postUser({
+      return AuthApiService.postUser({
         username: username.value,
         password: password.value,
         email: email.value,
       })
       .then(user => {
+        console.log('User posted');
+        return AuthApiService.postLogin({
+          username: username.value,
+          password: password.value,
+        })
+      })
+      .then(() => {
         username.value = '';
         password.value = '';
         email.value = '';
         confirm_password.value = '';
+        
         //Do something to indicate successful sign up --> Redirect to Login page?
       })
       .catch(res => {
+        console.log('Error');
         this.setState({ 
           hasError: true,
           error: res.error 
@@ -264,6 +274,7 @@ class App extends Component {
   }
   
   render() {
+    
     return (
       <Router>
         <Context.Provider

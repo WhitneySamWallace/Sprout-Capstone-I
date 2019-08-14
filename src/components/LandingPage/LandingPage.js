@@ -69,7 +69,7 @@ class LandingPage extends React.Component {
             <h3>Let Sprout help you grow your students' understanding today.</h3>
             </header>
             <h3>Sign Up</h3>
-            <SignUpForm />
+            <SignUpForm {...this.props}/>
           </section>
           <img src={sproutBorder} alt="line of sprouts" className="sprout-border"/>
         </main>
