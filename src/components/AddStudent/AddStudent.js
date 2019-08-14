@@ -3,6 +3,8 @@ import Nav from '../Nav/Nav';
 import './AddStudent.css';
 import Context from '../../context/Context';
 import StudentsApiService from '../../services/students-api-service';
+import sproutBorder from '../../images/sprout-border.svg';
+
 
 class AddStudent extends React.Component {
   static contextType = Context;
@@ -18,7 +20,7 @@ class AddStudent extends React.Component {
     const students = this.context.students.map((student, index) => {
       return (<li key={index}>
         {student.name}
-        <button onClick={e => this.context.handleDeleteStudent(student)}>Delete</button>
+        <button onClick={e => this.context.handleDeleteStudent(student)} className="delete-button">Delete</button>
       </li>)
     })
     return (
@@ -30,7 +32,7 @@ class AddStudent extends React.Component {
         </header>
         <form onSubmit={e => this.context.handleAddStudentSubmit(e)}>
           <div>
-            <label htmlFor="student-name">Student Name</label>
+            <label htmlFor="student-name">Student Name:</label>
             <input 
             placeholder="Student Name" 
             type="text" 
@@ -45,11 +47,12 @@ class AddStudent extends React.Component {
           <button type="submit">Add</button>
         </form>
       </main>
-      <section>
+      <section className="add-student-list">
         <ul>
           {students}
         </ul>
       </section>
+      <img src={sproutBorder} alt="line of sprouts" className="sprout-border"/>
     </div>
     )
   }

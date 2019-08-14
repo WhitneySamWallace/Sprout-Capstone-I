@@ -20,10 +20,11 @@ class App extends Component {
     error: null,
     hasError: null,
     students: [],
-    username: '', //STATIC FOR NOW
+    username: '', 
     minigoal: '',
     priority: 'low',
     newStudentName: '',
+    menuOpen: false,
   }
 
   setError = (error) => {
@@ -244,6 +245,12 @@ class App extends Component {
     const resetStudents = ({priority, order, goal, expand, alert, id, name}) => ({id, name, priority: 'high', order: 0, goal: '', expand: false, alert: false});
 
     this.setState(state => ({students: state.students.map(resetStudents)}))
+  }
+
+  handleMenuClick = () => {
+    this.setState({
+      menuOpen: !this.state.menuOpen,
+    });
   }
 
   // Expands student checkin and updates alert and order conditions (Main view)

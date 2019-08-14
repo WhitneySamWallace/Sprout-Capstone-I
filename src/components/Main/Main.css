@@ -1,19 +1,142 @@
+.main-view {
+  margin-top: 170px;
+  margin-bottom: 60px;
+}
+
+.main-view h2 {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.student-list ul {
+  list-style: none;
+  padding: 0px;
+  margin: 5px 20px;
+}
+
+.student-list h4,
+.goal {
+  margin-bottom: 0px;
+}
+
+.student-list h3 {
+  color: rgb(5, 164, 5);
+}
+
+.student-list p {
+  margin-top: 5px;
+}
+
+.student-list button {
+  text-decoration: none;
+  background-color: rgb(5, 164, 5);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 10px 0px rgba(179, 179, 179, 1);
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.update-submit {
+  margin-top: 20px;
+}
+
+.student-list .cancel {
+  background-color: salmon;
+}
+
+.student-list li {
+  box-shadow: 3px 3px 8px 3px rgba(179, 179, 179, 1);
+  border-radius: 10px;
+  padding: 3px 8px;
+  margin-bottom: 30px;
+}
+
+.student-list button:hover {
+  color: black;
+}
+
 .hidden {
   display: none;
 }
 
-.show {
-  color: blue;
+.show textarea {
+  width: 90%;
+  padding: 8px 12px;
+  margin: 8px 5px;
+  margin-left: 10px;
+  box-sizing: border-box;
+  border: 2px solid lightgray;
+  border-radius: 4px;
 }
 
-ul {
-  list-style: none;
+.radio input {
+  margin-left: 30px;
 }
 
-li {
-  border: solid gray 1px;
-}
-
-.alert {
+.high {
   background-color: lightcoral;
+}
+
+.low {
+  background-color: lightblue;
+}
+
+.medium {
+  background-color: lightgoldenrodyellow;
+}
+
+.alert button {
+  background-color: white;
+  color: black;
+  box-shadow: none;
+}
+
+.main-view .sprout-border {
+  margin-bottom: 0px;
+}
+
+.reset-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.reset-button {
+  margin-right: 20px;
+}
+
+/* MEDIA QUERIES */
+
+@media only screen and (min-width: 500px) {
+  .student-list ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .student-list li {
+    width: 300px;
+    margin-left: 10px;
+    margin-right: 10px;
+    min-height: 250px;
+  }
+}
+
+@media only screen and (min-width: 1350px) {
+  .main-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .student-list-container {
+    display: flex;
+    justify-content: center;
+  }
+  .main-view main {
+    width: 1350px;
+  }
 }

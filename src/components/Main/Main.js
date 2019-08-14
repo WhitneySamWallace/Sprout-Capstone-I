@@ -3,6 +3,7 @@ import Nav from '../Nav/Nav';
 import './Main.css';
 import Context from '../../context/Context';
 import StudentsApiService from '../../services/students-api-service';
+import sproutBorder from '../../images/sprout-border.svg';
 
 class Main extends React.Component {
   static contextType = Context;
@@ -24,16 +25,16 @@ class Main extends React.Component {
     
     const students = allStudents.map((student, index) => {
       return (
-        <li key={index} className={student.alert === true ? 'alert' : ''}>
+        <li key={index} className={student.alert === true ? `alert ${student.priority}` : ''}>
                 <h4>{student.name}</h4>
-                <p>Goal: {student.goal}</p>
+                <p className="goal">Goal: {student.goal}</p>
                 <p>Priority: {student.priority}</p>
-                <button onClick={e => this.context.toggleExpand(student.id)}>{student.expand === true ? 'Cancel' : 'Check In'}</button>
+                <button className={student.expand ? "cancel" : "checkin"} onClick={e => this.context.toggleExpand(student.id)}>{student.expand === true ? 'Cancel' : 'Check In'}</button>
                 <div className={student.expand === false ? "hidden" : "show"}>
                   <form onSubmit={e => (this.context.handleUpdateGoal(e, student.id))}>
                     <div>
                       <label htmlFor="new-goal">New Goal:</label>
-                      <input 
+                      <textarea 
                       placeholder="New Mini-Goal" 
                       name="new-goal" 
                       id="new-goal" 
@@ -43,7 +44,7 @@ class Main extends React.Component {
                       required
                       />
                     </div>
-                    <div>
+                    <div className="radio">
                       <input type="radio" value="0" id="high" name="priority" onChange={e => this.context.updatePriority('high')} />
                       <label htmlFor="high">High</label>
                       <input type="radio" value="1" id="medium" name="priority" onChange={e => this.context.updatePriority('medium')} />
@@ -51,27 +52,33 @@ class Main extends React.Component {
                       <input type="radio" value="3" id="low" name="priority" onChange={e => this.context.updatePriority('low')} />
                       <label htmlFor="low">Low</label>
                     </div>
-                    <button type="submit">Update</button>
+                    <button type="submit" className="update-submit">Update</button>
                   </form>
                 </div>
               </li>
       )
     })
     return (
-      <div className="Main">
+      <div className="main-view">
         <Nav />
         <main>
           <header>
             <h2>Welcome back, {this.context.username}!</h2>
           </header>
-          <section>
+          <section className="student-list">
             <h3>Student List</h3>
-            <button onClick={e => this.context.handleReset(e)}>Reset</button>
-            <ul>
-              {students}
-            </ul>
+            <div className="reset-button-container">
+              <button onClick={e => this.context.handleReset(e)} className="reset-button">Reset</button>
+            </div>
+            <div className="student-list-container">
+              <ul>
+              { students}
+              </ul>
+            </div>
           </section>
         </main>
+        <img src={sproutBorder} alt="line of sprouts" className="sprout-border"/>
+
       </div>
     );
   }
