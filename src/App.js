@@ -17,14 +17,15 @@ import IdleService from './services/idle-service';
 class App extends Component {
 
   state = {
-    error: null,
-    hasError: null,
+    error: 'Testing error',
+    hasError: true,
     students: [],
-    username: '', 
+    username: '',
+    user_id: '', 
     minigoal: '',
     priority: 'low',
     newStudentName: '',
-    menuOpen: false,
+    loggedIn: false,
   }
 
   setError = (error) => {
@@ -84,6 +85,9 @@ class App extends Component {
     TokenService.clearCallbackBeforeExpiry();
     IdleService.unRegisterIdleResets();
     this.forceUpdate();
+    this.setState({
+      loggedIn: false,
+    })
   }
 
   // all 'update' prefixes set state 
@@ -91,6 +95,12 @@ class App extends Component {
   updateUsername = (username) => {
     this.setState({
       username
+    })
+  }
+
+  updateUserId = (user_id) => {
+    this.setState({
+      user_id
     })
   }
 
@@ -110,6 +120,12 @@ class App extends Component {
   updateNewStudentName = (name) => {
     this.setState({
       newStudentName: name
+    })
+  }
+
+  updatedLoggedIn = () => {
+    this.setState({
+      loggedIn: false,
     })
   }
 
@@ -133,18 +149,9 @@ class App extends Component {
         console.error(err);
         this.setState({
           hasError: true,
-          error: err
+          error: err.message  
         });
       });
-
-    //const studentToUpdate = this.state.students.find(student => student.id === studentId)
-    //const updatedStudent = {...studentToUpdate, goal: this.state.minigoal, priority: this.state.priority, expand: false, order: 0}
-    //this.handleTimer(studentId, this.state.priority)
-    // this.setState({
-    //   students: this.state.students.map(student => student.id !== studentId ? student : updatedStudent),
-    //   minigoal: '',
-    //   priority: 'low',
-    // })
   }
 
   // Sets timer for specified priority (Main view)
@@ -203,7 +210,6 @@ class App extends Component {
 
   handleSignUpSubmit = (e) => {
     e.preventDefault();
-    console.log('Sign up called');
     const {username, password, email, confirm_password} = e.target;
     
     this.setState({ 
@@ -213,35 +219,40 @@ class App extends Component {
 
     //VALIDATE THAT PASSWORD MATCHES
     if (password.value !== confirm_password.value) {
-      //trigger passwords do not match error
       this.setState({
         hasError: true,
         error: 'Passwords do not match!'
       })
+      return Promise.reject()
     } else {
-      
       return AuthApiService.postUser({
         username: username.value,
         password: password.value,
         email: email.value,
       })
-      .then(user => {
+      .then(res => {
+        console.log("RES =>", res);
+        if (res.username) { 
         console.log('User posted');
         return AuthApiService.postLogin({
           username: username.value,
           password: password.value,
         })
+      }
       })
       .then(() => {
+        if (TokenService.hasAuthToken) {
+          this.setState({
+            loggedIn: true,
+            username: username.value,
+          })
+        }
         username.value = '';
         password.value = '';
         email.value = '';
         confirm_password.value = '';
-        
-        //Do something to indicate successful sign up --> Redirect to Login page?
       })
       .catch(res => {
-        console.log('Error');
         this.setState({ 
           hasError: true,
           error: res.error 
@@ -281,10 +292,13 @@ class App extends Component {
           value={{
             students: this.state.students,
             hasError: this.state.hasError,
+            error: this.state.error,
             isLoading: this.state.isLoading,
             username: this.state.username,
+            user_id: this.state.user_id,
             minigoal: this.state.minigoal,
             priority: this.state.priority,
+            loggedIn: this.state.loggedIn,
             newStudentName: this.state.newStudentName,
             handleAddStudent: this.handleAddStudent,
             handleAddStudentSubmit: this.handleAddStudentSubmit,
@@ -298,6 +312,8 @@ class App extends Component {
             updatePassword: this.updatePassword,
             updateEmail: this.updateEmail,
             updateUsername: this.updateUsername,
+            updatedLoggedIn: this.updatedLoggedIn,
+            updateUserId: this.updateUserId,
             handleSignUpSubmit: this.handleSignUpSubmit,
             handleReset: this.handleReset,
             setError: this.setError,

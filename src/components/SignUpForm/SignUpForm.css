@@ -24,6 +24,15 @@
   color: black;
 }
 
+.error {
+  font-size: 13px;
+  color: salmon;
+}
+
+.sign-up-section span {
+  font-size: 13px;
+}
+
 /* MEDIA QUERIES */
 
 @media only screen and (min-width: 500px) {

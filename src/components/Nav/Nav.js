@@ -13,6 +13,7 @@ class Nav extends React.Component {
     TokenService.clearAuthToken();
     TokenService.clearCallbackBeforeExpiry();
     IdleService.unRegisterIdleResets();
+    this.context.updatedLoggedIn();
   }
 
 

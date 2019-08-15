@@ -16,7 +16,7 @@ const StudentsApiService = {
     })
   },
 
-  postStudent(name) {
+  postStudent(name, user_id) {
     return fetch(`${config.API_ENDPOINT}/students`, {
       method: 'POST',
       headers: {
@@ -24,7 +24,8 @@ const StudentsApiService = {
         'authorization': `bearer ${TokenService.getAuthToken()}`
       },
       body: JSON.stringify({
-        name
+        name,
+        user_id
       }),
     })
     .then(res => {

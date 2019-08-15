@@ -65,6 +65,7 @@ class Main extends React.Component {
           <header>
             <h2>Welcome back, {this.context.username}!</h2>
           </header>
+          {this.context.error && <p className='error'>{this.context.error}</p>}
           <section className="student-list">
             <h3>Student List</h3>
             <div className="reset-button-container">

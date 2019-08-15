@@ -1,6 +1,7 @@
 .Log-In form {
   margin-top: 20px;
   padding: 0px 20px;
+  margin-bottom: 100px;
 }
 
 .Log-In input {
@@ -40,6 +41,6 @@
   }
 
   .Log-In form {
-    width: 600px;
+    width: 500px;
   }
 }

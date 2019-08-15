@@ -5,16 +5,23 @@ import "./SignUpForm.css";
 class SignUpForm extends React.Component {
   static contextType = Context;
 
+  handleRedirect = () => {
+    if (this.context.loggedIn) {
+      this.props.history.push('/main');
+    }
+  }
+
   render() {
-    console.log(this.props);
-    console.log(this.context.handleSignUpSubmit);
     return (
       <div className="sign-up-form-container">
       <form
         id="sign-up-form"
-        onSubmit={e => this.context.handleSignUpSubmit(e).then(()=>{this.props.history.push('/main')})}
+        onSubmit={e => this.context.handleSignUpSubmit(e).then(this.handleRedirect).catch(()=>{})} //.then(this.handleRedirect)
       >
         <div>
+        <div className={this.context.hasError ? "error" : "hidden"}>
+            {this.context.error && <p className='error'>{this.context.error}</p>}
+          </div>
           <label htmlFor="username">User Name:</label>
           <input
             placeholder="User Name"
