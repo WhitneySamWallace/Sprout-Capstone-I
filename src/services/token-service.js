@@ -1,12 +1,13 @@
-import jwtDecode from 'jwt-decode';
-import config from '../config';
+import jwtDecode from "jwt-decode";
+import config from "../config";
 
 let timeoutId;
 const tenSecondsInMs = 10000;
 
+// Working with auth token and setting up expiry instructions
 const TokenService = {
   saveAuthToken(token) {
-      window.localStorage.setItem(config.TOKEN_KEY, token);
+    window.localStorage.setItem(config.TOKEN_KEY, token);
   },
   getAuthToken() {
     return window.localStorage.getItem(config.TOKEN_KEY);
@@ -24,15 +25,17 @@ const TokenService = {
     return TokenService.parseJwt(TokenService.getAuthToken());
   },
   getMsUntilExpiry(payload) {
-    return (payload.exp * 1000) - Date.now();
+    return payload.exp * 1000 - Date.now();
   },
   queueCallbackBeforeExpiry(callback) {
-    const msUntilExpiry = TokenService.getMsUntilExpiry(TokenService.readJwtToken())
+    const msUntilExpiry = TokenService.getMsUntilExpiry(
+      TokenService.readJwtToken()
+    );
     timeoutId = setTimeout(callback, msUntilExpiry - tenSecondsInMs);
   },
   clearCallbackBeforeExpiry() {
     clearTimeout(timeoutId);
-  },
-}
+  }
+};
 
 export default TokenService;

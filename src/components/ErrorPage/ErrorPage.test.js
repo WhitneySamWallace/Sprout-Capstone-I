@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NotFound from './NotFound';
+import ErrorPage from './ErrorPage';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<NotFound />, div);
+  ReactDOM.render(<ErrorPage />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

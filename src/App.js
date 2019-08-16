@@ -1,67 +1,67 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './App.css';
-import LandingPage from './components/LandingPage/LandingPage';
-import LogIn from './components/LogIn/LogIn';
-import Main from './components/Main/Main';
-import AddStudent from './components/AddStudent/AddStudent';
-import NotFound from './components/NotFound/NotFound';
-import Footer from './components/Footer/Footer';
-import Context from './context/Context';
-import StudentsApiService from './services/students-api-service';
-import AuthApiService from './services/auth-api-service';
-import TokenService from './services/token-service';
-import IdleService from './services/idle-service';
-
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "./App.css";
+import LandingPage from "./components/LandingPage/LandingPage";
+import LogIn from "./components/LogIn/LogIn";
+import Main from "./components/Main/Main";
+import AddStudent from "./components/AddStudent/AddStudent";
+import ErrorPage from "./components/ErrorPage/ErrorPage";
+import Footer from "./components/Footer/Footer";
+import Context from "./context/Context";
+import StudentsApiService from "./services/students-api-service";
+import AuthApiService from "./services/auth-api-service";
+import TokenService from "./services/token-service";
+import IdleService from "./services/idle-service";
 
 class App extends Component {
-
   state = {
-    error: 'Testing error',
-    hasError: true,
+    error: null,
+    hasError: null,
     students: [],
-    username: '',
-    user_id: '', 
-    minigoal: '',
-    priority: 'low',
-    newStudentName: '',
-    loggedIn: false,
-  }
+    username: "",
+    user_id: "",
+    minigoal: "",
+    priority: "low",
+    newStudentName: "",
+    loggedIn: false
+  };
 
-  setError = (error) => {
+  // Error handling
+  setError = error => {
     console.error(error);
-    this.setState({ 
+    this.setState({
       error,
-      hasError: true,
-    })
-  }
+      hasError: true
+    });
+  };
 
   clearError = () => {
-    this.setState({ 
+    this.setState({
       error: null,
-      hasError: false,
-    })
-  }
+      hasError: false
+    });
+  };
 
-  setStudents = (students) => {
+  // Adding UI data to students from database
+  setStudents = students => {
     const addKeysStudents = students.map(student => {
       student.expand = false;
       student.alert = false;
       student.order = 0;
-      student.priority = 'low';
+      student.priority = "low";
 
       return student;
-    })
+    });
     this.setState({
       students: addKeysStudents
-    })
-  }
+    });
+  };
 
-  setNewStudent = (newStudent) => {
+  setNewStudent = newStudent => {
     this.setState({
       students: [...this.state.students, newStudent]
-    })
-  }
+    });
+  };
 
   // Auth/Idle
   componentDidMount() {
@@ -71,7 +71,7 @@ class App extends Component {
       IdleService.registerIdleTimerResets();
       TokenService.queueCallbackBeforeExpiry(() => {
         AuthApiService.postRefreshToken();
-      })
+      });
     }
   }
 
@@ -86,206 +86,239 @@ class App extends Component {
     IdleService.unRegisterIdleResets();
     this.forceUpdate();
     this.setState({
-      loggedIn: false,
-    })
-  }
+      loggedIn: false
+    });
+  };
 
-  // all 'update' prefixes set state 
-
-  updateUsername = (username) => {
+  // all 'update' prefixes set state
+  updateUsername = username => {
     this.setState({
       username
-    })
-  }
+    });
+  };
 
-  updateUserId = (user_id) => {
+  updateUserId = user_id => {
     this.setState({
       user_id
-    })
-  }
+    });
+  };
 
-  updateMiniGoal = (goal) => {
+  updateMiniGoal = goal => {
     this.setState({
       minigoal: goal
-    })
-  }
+    });
+  };
 
-  updatePriority = (priority) => {
-    const updatePriority = priority === '' ? 'low' : priority 
+  updatePriority = priority => {
+    const updatePriority = priority === "" ? "low" : priority;
     this.setState({
       priority: updatePriority
-    })
-  }
+    });
+  };
 
-  updateNewStudentName = (name) => {
+  updateNewStudentName = name => {
     this.setState({
       newStudentName: name
-    })
-  }
+    });
+  };
 
   updatedLoggedIn = () => {
     this.setState({
-      loggedIn: false,
-    })
-  }
+      loggedIn: false
+    });
+  };
 
   // Updates mini-goal and priority for student having check-in (Main view)
   handleUpdateGoal = (e, studentId) => {
     e.preventDefault();
     this.clearError();
-    const data = {goal: this.state.minigoal, priority: this.state.priority}
+    const data = { goal: this.state.minigoal, priority: this.state.priority };
     StudentsApiService.updateStudent(studentId, data)
       .then(res => {
-        const studentToUpdate = this.state.students.find(student => student.id ===studentId)
-        const updatedStudent = {...studentToUpdate, ...data, expand: false, order: 0};
+        const studentToUpdate = this.state.students.find(
+          student => student.id === studentId
+        );
+        const updatedStudent = {
+          ...studentToUpdate,
+          ...data,
+          expand: false,
+          order: 0
+        };
         this.handleTimer(updatedStudent.id, this.state.priority);
         this.setState({
-          students: this.state.students.map(student => student.id !== studentId ? student : updatedStudent),
-          minigoal: '',
-          priority: 'low',
+          students: this.state.students.map(student =>
+            student.id !== studentId ? student : updatedStudent
+          ),
+          minigoal: "",
+          priority: "low"
         });
       })
       .catch(err => {
         console.error(err);
         this.setState({
           hasError: true,
-          error: err.message  
+          error: err.message
         });
       });
-  }
+  };
 
   // Sets timer for specified priority (Main view)
   // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 ------------ //CHANGED FOR TESTING
   handleTimer = (studentId, priority) => {
-    const time = priority === 'high' ? 3000 : (priority === 'medium') ? 6000 : 12000;
-    setTimeout(this.handleAlert, time, studentId)
-  }
+    const time =
+      priority === "high" ? 3000 : priority === "medium" ? 6000 : 12000;
+    setTimeout(this.handleAlert, time, studentId);
+  };
 
   // Callback fn for priority timers, enables alert status and reorders (Main view)
-  handleAlert = (studentId) => {
-    const alertStudent = this.state.students.find(student => student.id === studentId);
+  handleAlert = studentId => {
+    const alertStudent = this.state.students.find(
+      student => student.id === studentId
+    );
     // toggle alert
-    const studentOrder = {...alertStudent, alert: true, order: new Date()}
+    const studentOrder = { ...alertStudent, alert: true, order: new Date() };
     // re-order
     this.setState({
-      students: this.state.students.map(student => student.id !== studentId ? student : studentOrder)
-    })
-  }
+      students: this.state.students.map(student =>
+        student.id !== studentId ? student : studentOrder
+      )
+    });
+  };
 
   //Updates student and adds them to student list (Add Student view)
-  handleAddStudentSubmit = (e) => {
+  handleAddStudentSubmit = e => {
     e.preventDefault();
     this.clearError();
-    const newStudentName = this.state.newStudentName
-    
+    const newStudentName = this.state.newStudentName;
+
     StudentsApiService.postStudent(newStudentName)
-    .then(student => {
-      this.setState({
-        students: [...this.state.students, student],
-        newStudentName: '',
+      .then(student => {
+        this.setState({
+          students: [...this.state.students, student],
+          newStudentName: ""
+        });
       })
-    })
-    .catch(err => {
-      console.error(err);
-      this.setError(err);
-    })
-  }
+      .catch(err => {
+        console.error(err);
+        this.setError(err);
+      });
+  };
 
   //Deletes student from list (Add Student view)
-  handleDeleteStudent = (deleteStudent) => {
+  handleDeleteStudent = deleteStudent => {
     this.clearError();
     const studentId = deleteStudent.id;
 
     StudentsApiService.deleteStudent(studentId)
       .then(() => {
         this.setState({
-          students: this.state.students.filter(student => student.id !== studentId)
-        })
+          students: this.state.students.filter(
+            student => student.id !== studentId
+          )
+        });
       })
       .catch(err => {
         console.error(err);
         this.setError(err);
-      })
-  }
+      });
+  };
 
-  handleSignUpSubmit = (e) => {
+  // Handles sign up, and validation -> will redirect upon valid sign in (see SignUpForm)
+  handleSignUpSubmit = e => {
     e.preventDefault();
-    const {username, password, email, confirm_password} = e.target;
-    
-    this.setState({ 
+    const { username, password, email, confirm_password } = e.target;
+
+    this.setState({
       hasError: false,
-      error: null 
-    })
+      error: null
+    });
 
     //VALIDATE THAT PASSWORD MATCHES
     if (password.value !== confirm_password.value) {
       this.setState({
         hasError: true,
-        error: 'Passwords do not match!'
-      })
-      return Promise.reject()
+        error: "Passwords do not match!"
+      });
+      return Promise.reject();
     } else {
       return AuthApiService.postUser({
         username: username.value,
         password: password.value,
-        email: email.value,
+        email: email.value
       })
-      .then(res => {
-        console.log("RES =>", res);
-        if (res.username) { 
-        console.log('User posted');
-        return AuthApiService.postLogin({
-          username: username.value,
-          password: password.value,
+        .then(res => {
+          if (res.username) {
+            return AuthApiService.postLogin({
+              username: username.value,
+              password: password.value
+            });
+          }
         })
-      }
-      })
-      .then(() => {
-        if (TokenService.hasAuthToken) {
+        .then(() => {
+          if (TokenService.hasAuthToken) {
+            this.setState({
+              loggedIn: true,
+              username: username.value
+            });
+          }
+          username.value = "";
+          password.value = "";
+          email.value = "";
+          confirm_password.value = "";
+        })
+        .catch(res => {
           this.setState({
-            loggedIn: true,
-            username: username.value,
-          })
-        }
-        username.value = '';
-        password.value = '';
-        email.value = '';
-        confirm_password.value = '';
-      })
-      .catch(res => {
-        this.setState({ 
-          hasError: true,
-          error: res.error 
-        })
-      })
+            hasError: true,
+            error: res.error
+          });
+        });
     }
-  }
+  };
 
   // Source: https://stackoverflow.com/questions/52844028/using-setstate-to-change-multiple-values-within-an-array-of-objects-reactjs
-  handleReset = (e) => {
-    const resetStudents = ({priority, order, goal, expand, alert, id, name}) => ({id, name, priority: 'high', order: 0, goal: '', expand: false, alert: false});
-
-    this.setState(state => ({students: state.students.map(resetStudents)}))
-  }
-
-  handleMenuClick = () => {
-    this.setState({
-      menuOpen: !this.state.menuOpen,
+  handleReset = e => {
+    const resetStudents = ({
+      priority,
+      order,
+      goal,
+      expand,
+      alert,
+      id,
+      name
+    }) => ({
+      id,
+      name,
+      priority: "low",
+      order: 0,
+      goal: "",
+      expand: false,
+      alert: false
     });
-  }
+
+    this.setState(state => ({ students: state.students.map(resetStudents) }));
+  };
 
   // Expands student checkin and updates alert and order conditions (Main view)
-  toggleExpand = (studentId) => {
-    const studentToExpand = this.state.students.find(student => student.id === studentId);
-    const alertCheck = studentToExpand.alert === false ? 0 : studentToExpand.order
-    const expandedStudent = {...studentToExpand, expand: !studentToExpand.expand, alert: false, order: alertCheck}
+  toggleExpand = studentId => {
+    const studentToExpand = this.state.students.find(
+      student => student.id === studentId
+    );
+    const alertCheck =
+      studentToExpand.alert === false ? 0 : studentToExpand.order;
+    const expandedStudent = {
+      ...studentToExpand,
+      expand: !studentToExpand.expand,
+      alert: false,
+      order: alertCheck
+    };
     this.setState({
-      students: this.state.students.map(student => student.id !== studentId ? student : expandedStudent)
-    })
-  }
-  
+      students: this.state.students.map(student =>
+        student.id !== studentId ? student : expandedStudent
+      )
+    });
+  };
+
   render() {
-    
     return (
       <Router>
         <Context.Provider
@@ -318,24 +351,24 @@ class App extends Component {
             handleReset: this.handleReset,
             setError: this.setError,
             clearError: this.clearError,
-            setStudents: this.setStudents,
-
-          }}>
+            setStudents: this.setStudents
+          }}
+        >
           <div className="App">
-              <Switch>
-                <Route exact path="/" component={LandingPage}/>
-                <Route path="/login" component={LogIn}/>
-                <Route path="/main" component={Main}/>
-                <Route path="/add" component={AddStudent}/>
-                <Route path="/404" component={NotFound}/>
-              </Switch>
+            <Switch>
+              <ErrorPage>
+                <Route exact path="/" component={LandingPage} />
+                <Route path="/login" component={LogIn} />
+                <Route path="/main" component={Main} />
+                <Route path="/add" component={AddStudent} />
+              </ErrorPage>
+            </Switch>
             <Footer />
           </div>
         </Context.Provider>
       </Router>
     );
   }
-  
 }
 
 export default App;

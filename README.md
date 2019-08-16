@@ -1,68 +1,55 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Sprout
 
-## Available Scripts
+## Motivation:
+Every day teachers are striving to give their students specific, timely, and goal-oriented feedback to adhere to teaching best practices and nurture the understanding of their students.  
 
-In the project directory, you can run:
+With the increasing pressures of curriculum, standardized testing, and behavior management - Sprout is built to help teachers organize their feedback, set specific goals for each student, and give reminders to check back in a timely manner.  Right now, Sprout focuses on elementary school classrooms.
 
-### `npm start`
+#### Live Link: [Sprout App]()
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Summary:
+Sprout helps teachers give their students specific, timely, and goal-oriented feedback.  Sprout let's teachers add students from their class (right now only supports one class, multiple class support in the works).  Each student is displayed on a card along with their current goal and goal priority.  By clicking the `Check In` button, the card expands and allows teachers to update the student's goal and set a new priority.  
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+All priorities have a timer attached.  Currently `high priority` goals alert the teacher to check back in after `5 minutes`.  `Medium priority` goals expire in `10 minutes`, and `low priority` in `20 minutes`.  These are set timers for now, customizable timers are in the works.
 
-### `npm test`
+## Demo Account:
+See what Sprout has to offer by using these login credentials:
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### *Username: Teacher1*
+### *Password: Teacher1pass!*
 
-### `npm run build`
+## Screenshots:
+*insert screenshots here*
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## API Documentation:
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Technology/Frameworks Used:
+- Express
+- PostgreSQL
+- React using [Create React App](https://github.com/facebook/create-react-app).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Installation:
+### [Sprout Server](https://github.com/WhitneySamWallace/Sprout-Server)
+- Install dependencies: `npm install`
+- Create development and test databases: `createdb sprout`, `createdb sprout-test`
+- Create database user: `postgres`
+- Grant privileges to new user in `psql`:
+  - `GRANT ALL PRIVILEGES ON DATABASE sprout TO postgres`
+  - `GRANT ALL PRIVILEGES ON DATABASE sprout-test TO postgres`
+- Prepare environment file: `cp exmaple.env .env`
+  - Replace values in `.env` with your custom values if necessary.
+- Bootstrap development database: `MIGRATION_DB_NAME=sprout npm run migrate`
+- Bootstrap test database: `MIGRATION_DB_NAME=sprout-test npm run migrate`
+- To seed the database for development: `psql -U postgres -d sprout -f ./seeds/seed.sprout_users.sql` and `psql -U postgres -d sprout -f ./seeds/seed.sprout_students.sql`
+- Start the server for development: `npm run dev`
 
-### `npm run eject`
+### [Sprout Client]()
+- Install dependencies: `npm install`
+- Start the application for development: `npm start`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Credits:
+Created by Whitney Wallace 
+- [Portfolio](https://thinkful-ei-emu.github.io/portfolio-whitney/)
+- Twitter: [@ThatWhitneySam](https://twitter.com/ThatWhitneySam)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
