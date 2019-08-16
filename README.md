@@ -8,7 +8,7 @@ With the increasing pressures of curriculum, standardized testing, and behavior 
 #### Live Link: [Sprout App](https://sprout-capstone-1.whitneysamwallace.now.sh/)
 
 ## Summary:
-Sprout helps teachers give their students specific, timely, and goal-oriented feedback.  Sprout let's teachers add students from their class (right now only supports one class, multiple class support in the works).  Each student is displayed on a card along with their current goal and goal priority.  By clicking the `Check In` button, the card expands and allows teachers to update the student's goal and set a new priority.  
+Sprout helps teachers give their students specific, timely, and goal-oriented feedback.  Sprout lets teachers add students from their class (right now only supports one class, multiple class support in the works).  Each student is displayed on a card along with their current goal and goal priority.  By clicking the `Check In` button, the card expands and allows teachers to update the student's goal and set a new priority.  
 
 All priorities have a timer attached.  Currently `high priority` goals alert the teacher to check back in after `5 minutes`.  `Medium priority` goals expire in `10 minutes`, and `low priority` in `20 minutes`.  These are set timers for now, customizable timers are in the works.
 
