@@ -14,6 +14,7 @@ class Nav extends React.Component {
     TokenService.clearCallbackBeforeExpiry();
     IdleService.unRegisterIdleResets();
     this.context.updatedLoggedIn();
+    this.context.setStudents([]);
   };
 
   // Displayed while user is logged in

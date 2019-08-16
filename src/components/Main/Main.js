@@ -3,6 +3,7 @@ import Nav from "../Nav/Nav";
 import "./Main.css";
 import Context from "../../context/Context";
 import StudentsApiService from "../../services/students-api-service";
+import TokenService from "../../services/token-service";
 
 class Main extends React.Component {
   static contextType = Context;
@@ -10,9 +11,14 @@ class Main extends React.Component {
   // When component loads, gets students from server
   componentDidMount() {
     this.context.clearError();
-    StudentsApiService.getStudents()
+    if(TokenService.hasAuthToken()) {
+      return StudentsApiService.getStudents()
       .then(students => this.context.setStudents(students))
       .catch(error => this.context.setError(error));
+    }
+    
+    this.props.history.push("/login");
+    this.context.setStudents([]);
   }
 
   render() {

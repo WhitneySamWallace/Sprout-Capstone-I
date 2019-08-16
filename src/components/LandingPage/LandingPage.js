@@ -64,7 +64,7 @@ class LandingPage extends React.Component {
               <p>Discover what Sprout has to offer:</p>
               <ul>
                 <li>Username: Teacher1</li>
-                <li>Password: teacher1password</li>
+                <li>Password: Teacher1pass!</li>
               </ul>
               <NavLink to="/login" className="sign-up-button">
                 Demo Login

@@ -3,18 +3,25 @@ import Nav from "../Nav/Nav";
 import "./ErrorPage.css";
 
 class ErrorPage extends React.Component {
-  state = { error: null };
+  state = { hasError: false };
 
   static getDerivedStateFromError(error) {
     console.error(error);
 
-    return { error };
+    return { hasError: true };
   }
 
   componentDidCatch(error) {
     this.setState({
       error: error
     });
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      hasError: false
+    });
+    this.props.history.push("/")
   }
   render() {
     if (this.state.error) {
@@ -23,7 +30,7 @@ class ErrorPage extends React.Component {
           <Nav />
           <main>
             <header className="error-page-header">
-              <h2>Oops! Something went wrong! Please try again later.</h2>
+              <h2>Oops! Something went wrong! Please try refreshing the browser.</h2>
             </header>
           </main>
         </div>

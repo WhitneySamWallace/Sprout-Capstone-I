@@ -30,6 +30,7 @@ bold - font-family: 'Rubik', sans-serif; */
 .demo-section-card li {
   border: none;
   padding: 0;
+  font-size: 15px;
 }
 
 .demo-section-card ul {
