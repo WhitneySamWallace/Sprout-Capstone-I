@@ -94,13 +94,13 @@ See what Sprout has to offer by using these login credentials:
 - To seed the database for development: `psql -U postgres -d sprout -f ./seeds/seed.sprout_users.sql` and `psql -U postgres -d sprout -f ./seeds/seed.sprout_students.sql`
 - Start the server for development: `npm run dev`
 
-### [Sprout Client]()
+### [Sprout Client](https://github.com/WhitneySamWallace/Sprout-Client)
 - Install dependencies: `npm install`
 - Start the application for development: `npm start`
 
 ## Credits:
 Created by Whitney Wallace 
 - [Portfolio](https://thinkful-ei-emu.github.io/portfolio-whitney/)
-- Twitter: [@ThatWhitneySam](https://twitter.com/ThatWhitneySam)
+
 
 
