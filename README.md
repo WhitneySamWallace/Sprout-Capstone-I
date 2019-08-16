@@ -43,7 +43,8 @@ See what Sprout has to offer by using these login credentials:
 ![](./Screenshots/Main3.png)
 - When the user is having a student `Check In`, the previous goal and priority persist so the user can conference with the student about their progress and then submit a new goal by entering the goal and priority, then pressing `Update`.
 ![](./Screenshots/Main4.png)
-- When the user clicks `Update` the student card collapses and a timer starts depending on the selected priority.  The student remains in their original list order until the timer expires
+- When the user clicks `Update` the student card collapses and a timer starts depending on the selected priority.  The student remains in their original list order until the timer expires.
+
 ![](./Screenshots/Main5.png)
 - Once the priority timer expires, the student card is moved to the top of the list and color coded according to the goal priority.  
 ![](./Screenshots/Main6.png)
