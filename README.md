@@ -58,12 +58,12 @@ See what Sprout has to offer by using these login credentials:
 ![](./Screenshots/Main11.png)
 - If the user decides the student does not require a follow-up `Check In`, they can click `Cancel` and the student will be returned to their non-expired list location.
 ![](./Screenshots/Main12.png)
-- If the user wishes to rest all goals and priorities at the same time, they may click the `Reset` button.  Currently this is a client-side only data manipulation.  If the user does not perform a `Check In` with every student, that student card will default to their previous goal upon reload/re-log in.  This prevents loss of goal data.
+- If the user wishes to reset all goals and priorities at the same time, they may click the `Reset` button.  Currently this is a client-side only data manipulation.  If the user does not perform a `Check In` with every student that has been `Reset`, that student card will default to their previous goal upon reload/re-log in.  This prevents loss of goal data.
 ![](./Screenshots/Main13.png)
 
-## LogIn
+## AddStudent
 
-- If the user clicks the `+Add` navigational button, they will route to the `LogIn` view.
+- If the user clicks the `+Add` navigational button, they will route to the `AddStudent` view.
 ![](./Screenshots/AddStudent1.png)
 - A user can add a name by typing the student name and clicking `Add`.
 ![](./Screenshots/AddStudent2.png)
