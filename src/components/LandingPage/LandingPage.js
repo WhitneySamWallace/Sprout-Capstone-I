@@ -5,7 +5,6 @@ import SignUpForm from "../SignUpForm/SignUpForm";
 import Nav from "../Nav/Nav";
 import orangeSprout from "../../images/orange-sprout.svg";
 import yellowSprout from "../../images/yellow-sprout.svg";
-import sproutBorder from "../../images/sprout-border.svg";
 import "./LandingPage.css";
 
 class LandingPage extends React.Component {
@@ -81,11 +80,6 @@ class LandingPage extends React.Component {
             <h3>Sign Up</h3>
             <SignUpForm {...this.props} />
           </section>
-          <img
-            src={sproutBorder}
-            alt="line of sprouts"
-            className="sprout-border"
-          />
         </main>
       </div>
     );

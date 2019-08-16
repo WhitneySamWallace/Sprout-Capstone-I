@@ -5,7 +5,14 @@
   width: 100%;
   background-color: white;
   height: 50px;
-  border-top: 1px solid rgb(230, 230, 230)
+  background-image: url('../../images/sprout-border.svg');
+  background-repeat: repeat-x;
+  background-size: auto 50px;
+  padding-top: 50px;
+}
+
+.Footer div {
+  border-top: 1px solid rgb(230, 230, 230);
 }
 
 .Footer a {

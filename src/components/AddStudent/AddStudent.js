@@ -3,7 +3,6 @@ import Nav from "../Nav/Nav";
 import "./AddStudent.css";
 import Context from "../../context/Context";
 import StudentsApiService from "../../services/students-api-service";
-import sproutBorder from "../../images/sprout-border.svg";
 
 class AddStudent extends React.Component {
   static contextType = Context;
@@ -61,11 +60,6 @@ class AddStudent extends React.Component {
         <section className="add-student-list">
           <ul>{students}</ul>
         </section>
-        <img
-          src={sproutBorder}
-          alt="line of sprouts"
-          className="sprout-border"
-        />
       </div>
     );
   }

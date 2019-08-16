@@ -3,7 +3,6 @@ import Nav from "../Nav/Nav";
 import "./Main.css";
 import Context from "../../context/Context";
 import StudentsApiService from "../../services/students-api-service";
-import sproutBorder from "../../images/sprout-border.svg";
 
 class Main extends React.Component {
   static contextType = Context;
@@ -104,7 +103,7 @@ class Main extends React.Component {
           <header>
             <h2>Welcome back, {this.context.username}!</h2>
           </header>
-          {this.context.error && <p className="error">{this.context.error}</p>}
+          {/* {this.context.error && <p className="error">{this.context.error}</p>} */}
           <section className="student-list">
             <h3>Student List</h3>
             <div className="reset-button-container">
@@ -120,11 +119,6 @@ class Main extends React.Component {
             </div>
           </section>
         </main>
-        <img
-          src={sproutBorder}
-          alt="line of sprouts"
-          className="sprout-border"
-        />
       </div>
     );
   }

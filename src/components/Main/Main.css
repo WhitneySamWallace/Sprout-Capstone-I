@@ -1,6 +1,6 @@
 .main-view {
   margin-top: 170px;
-  margin-bottom: 45px;
+  margin-bottom: 120px;
 }
 
 .main-view h2 {
@@ -95,6 +95,8 @@
 
 .main-view .sprout-border {
   margin-bottom: 0px;
+  position: absolute;
+  bottom: 0;
 }
 
 .reset-button-container {

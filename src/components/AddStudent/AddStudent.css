@@ -1,6 +1,6 @@
 .Add-Student {
   margin-top: 170px;
-  margin-bottom: 45px;
+  margin-bottom: 100px;
 }
 
 .Add-Student ul {
@@ -47,6 +47,9 @@
 
 .Add-Student .sprout-border {
   margin-bottom: 0px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 .Add-Student li {
