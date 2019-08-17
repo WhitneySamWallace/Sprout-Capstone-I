@@ -5,7 +5,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import LogIn from "./components/LogIn/LogIn";
 import Main from "./components/Main/Main";
 import AddStudent from "./components/AddStudent/AddStudent";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
+import NotFound from "./components/NotFound/NotFound";
 import Footer from "./components/Footer/Footer";
 import Context from "./context/Context";
 import StudentsApiService from "./services/students-api-service";
@@ -28,7 +28,7 @@ class App extends Component {
 
   // Error handling
   setError = error => {
-    console.error(error);
+    console.error('THE ERROR IS', error);
     this.setState({
       error,
       hasError: true
@@ -163,10 +163,10 @@ class App extends Component {
   };
 
   // Sets timer for specified priority (Main view)
-  // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 ------------ //CHANGED FOR TESTING
+  // High - 5 min/300000, Medium - 10min/600000, Low - 20 min/1200000 
   handleTimer = (studentId, priority) => {
     const time =
-      priority === "high" ? 3000 : priority === "medium" ? 6000 : 12000;
+      priority === "high" ? 300000 : priority === "medium" ? 600000 : 1200000;
     setTimeout(this.handleAlert, time, studentId);
   };
 
@@ -326,7 +326,6 @@ class App extends Component {
             students: this.state.students,
             hasError: this.state.hasError,
             error: this.state.error,
-            isLoading: this.state.isLoading,
             username: this.state.username,
             user_id: this.state.user_id,
             minigoal: this.state.minigoal,
@@ -356,12 +355,11 @@ class App extends Component {
         >
           <div className="App">
             <Switch>
-              <ErrorPage>
                 <Route exact path="/" component={LandingPage} />
                 <Route path="/login" component={LogIn} />
                 <Route path="/main" component={Main} />
                 <Route path="/add" component={AddStudent} />
-              </ErrorPage>
+                <Route component={NotFound} />
             </Switch>
             <Footer />
           </div>

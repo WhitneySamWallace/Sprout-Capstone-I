@@ -22,7 +22,7 @@ class AddStudent extends React.Component {
 
   render() {
     //Creates student list with delete button
-    const students = this.context.students.map((student, index) => {
+    const students = this.context.students ? this.context.students.map((student, index) => {
       return (
         <li key={index}>
           {student.name}
@@ -34,7 +34,7 @@ class AddStudent extends React.Component {
           </button>
         </li>
       );
-    });
+    }) : [];
     return (
       <div className="Add-Student">
         <Nav />

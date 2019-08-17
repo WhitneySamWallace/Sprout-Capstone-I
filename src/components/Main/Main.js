@@ -25,7 +25,8 @@ class Main extends React.Component {
     // Students are sorted and listed so that students requiring checkins move to top of list
     // Student that has first expired timer stays at the top of the list
     // Students that do not have expired timers stay beneath all students with expired timers
-    const studentsToSort = this.context.students.filter(
+    const studentsFromContext = this.context.students || [];
+    const studentsToSort = studentsFromContext.filter(
       student => student.order !== 0
     );
 
@@ -33,7 +34,7 @@ class Main extends React.Component {
       a.order > b.order ? 1 : -1
     );
 
-    const studentsToList = this.context.students.filter(
+    const studentsToList = studentsFromContext.filter(
       student => student.order === 0
     );
 
@@ -107,7 +108,7 @@ class Main extends React.Component {
         <Nav />
         <main>
           <header>
-            <h2>Welcome back, {this.context.username}!</h2>
+            <h2>Welcome back{(this.context.username) ? `, ${this.context.username}` : ''}!</h2>
           </header>
           {/* {this.context.error && <p className="error">{this.context.error}</p>} */}
           <section className="student-list">
